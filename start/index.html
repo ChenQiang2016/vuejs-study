@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue 入门</title>
+</head>
+<body>
+
+<div id="app" v-bind:title="title">
+    <div>{{msg}}</div>
+    <div v-if="show">能显示出来吗</div>
+    <div>
+        <button v-on:click="showDiv">{{buttonLable}}</button>
+    </div>
+    <div>
+
+        <table border="1">
+            <tr>
+                <th>序号</th>
+                <th>姓名</th>
+                <th>密码</th>
+                <th>操作</th>
+            </tr>
+            <tr v-for="item in users" align="center">
+                <td>{{item.index}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.password}}</td>
+                <td>
+                    <a href="#">编辑</a> |
+                    <a href="#">删除</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <div>{{content | stringOp(content)}}</div>
+        <input type="text" v-model="content"><button v-on:click="getName">点我</button>
+    </div>
+    <div>
+        <div>{{htmlString}}</div>
+        <div v-html="htmlString"></div>
+    </div>
+    <div>
+        <button v-bind:disabled="isDisabled">能点击我吗</button>
+    </div>
+</div>
+
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+
+    var v = new Vue({
+        el:'#app',
+        data:{
+            msg:'hello vue',
+            title:'你好 vue.js',
+            show:false,
+            users:[
+                {index:1,name:'张三',password:'123456'},
+                {index:2,name:'张四',password:'123456'},
+                {index:3,name:'张五',password:'123456'},
+                {index:4,name:'张六',password:'123456'},
+                {index:5,name:'张七',password:'123456'},
+            ],
+            content:'aaaa',
+            htmlString:'<span style="color: red">这是一个psan</span>',
+            isDisabled:true,
+            buttonLable:'显示'
+        },
+        methods:{
+            getName:function(){
+                alert(this.content);
+            },
+            showDiv:function(){
+                if(this.show){
+                    this.show = false;
+                    this.buttonLable = '显示';
+                }else{
+                    this.show = true;
+                    this.buttonLable = '隐藏';
+                }
+            }
+        },
+        filters:{
+            stringOp:function(value){
+                return value == '' ? '' : function(value){
+                    return value.replace('4','');
+                };
+            }
+        }
+        /*created:function(){
+            console.log("###########created##############"+this.msg);
+        },
+        beforeCreate:function(){
+            console.log("###########before##############"+this.msg);
+        }*/
+    });
+
+</script>
+</body>
+</html>
